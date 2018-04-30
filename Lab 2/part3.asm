@@ -1,42 +1,40 @@
 .data
-z: .word 0
-i: .word 0 
+A: .word 2 # int Z
+B: .word 0 # int i 
+
 .text
-main:
-lw a1,z
-addi a1,a1,2
-lw a2,i
-li t1,22
-li t2,100
+main: 
 
-forloop:
-	beq a2,t1,dowhile #if i>20, move to dowhile loop
-	addi a1,a1,1 #z++
-	addi a2,a2,2 # i=i+2
-	j forloop
-
-dowhile:
-	beq  a1,t2,while #if i=100, move to while loop
-	addi a1,a1,1 #z++
-	j dowhile
-while:
-	beq a2,x0,done #if i=0, done
-	addi a1,a1,-1 # z--
-	addi a2,a2,-1 #i--
-	j while
-done:
-	sw a1,z,t0 #store word back to z
-	sw a2,i,t0 #store word back to i
-
-	li a7, 1	# system call code for print_int
-	lw a0, z	# integer to print
-	ecall		# print it
+	la t0, A # load A
+	la t1, B # load B 
 	
-	li a7, 1	# system call code for print_int
-	lw a0, i	# integer to print
-	ecall		# print it
+	li s0, 2
+	li s1, 0
+	li s2, 22
+	li s3, 100
+	li s4, 0
+	li s5, 1
+	
+	
+while: 
+	beq s1, s2, A1
+		addi s0, s0, 1
+		addi s1, s1, 2
+		sw s0, 0(t0) # save in the address 
+		sw s1, 0(t1) # save in the address 
+		j while 
 
-	li  a7,10       #system call for an exit
-    	ecall
-
-#end of program
+A1: 
+ 	beq s0, s3, B1 
+ 		addi s0, s0 ,1
+ 		sw s0, 0(t0) # save in the address 
+ 		j A1
+B1: 
+  	beq s1, s4, EXIT
+  		sub s0, s0, s5 
+  		sub s1, s1, s5
+  		sw s0, 0(t0) # save in the address 
+		sw s1, 0(t1) # save in the address 
+  		j B1
+  	
+EXIT: 
