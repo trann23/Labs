@@ -13,22 +13,23 @@ li s8, 7
 blt s0, s1, jump
 
 check: 
-	bgt s0, s1 C2
+	bgt s0, s1 C2 # If satisfy jump to C2
 	ADDi a0, s2, 1
-	BEQ a0, s8 , C2
+	BEQ a0, s8 , C2 #If satisfy jump to C3
 	
 	MV s3, s4
 	
 	j EXIT
 	
 jump: 
-	bgt s2, s7, C1
-	ble s2, s7, check
+	bgt s2, s7, C1 #If satisy, jump to C1
+	ble s2, s7, check #If satisfy, jump to check
 	
-C1: MV s3, s6 
+C1: 
+MV s3, s6 #z=-1
 j EXIT 
 
-C2: MV s3, s5 
+C2: MV s3, s5 #z=-2
 j EXIT 
 
 EXIT: 
