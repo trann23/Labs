@@ -56,9 +56,48 @@ BEGIN
 		wait for 20 ns; 			-- result = 0x124578AB  and zeroOut = 0
 
 		-- Add test cases here to drive the ALU implementation
+		datain_a <= X"01234567";
+		datain_b <= X"01010101";
+		control <= "00000";		-- Control in binary (ADDI test)
+		wait for 20 ns;			-- result = 0x02244668 and zeroOut = 0 at 139
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"11223344";
+		control  <= "00100";		-- Control in binary (SUB test)
+		wait for 20 ns; 		-- result = 0xF0011223  and zeroOut = 0 at 159
+		
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"01234567";
+		control  <= "00100";		-- Control in binary (ZERO test)
+		wait for 20 ns; 		-- result = 0  and zeroOut = 1	at 179
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"11223344";
+		control  <= "00010";		-- Control in binary (AND test)
+		wait for 20 ns; 		-- result = 0x01220144  and zeroOut = 0 at 199
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"11223344";
+		control  <= "00011";		-- Control in binary (OR and ORI test)
+		wait for 20 ns; 		-- result = 0x11237767  and zeroOut = 0 at 219
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"01010101";
+		control  <= "00011";		-- Control in binary (ORI test)
+		wait for 20 ns; 		-- result = 0x01235577  and zeroOut = 0 at 239
+
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"00000040";	-- in binary: 0000 0000 0000 0000 0000 0"000 01"00 0000
+		control  <= "00001";		-- Control in binary (SHIFT LEFT by 1 test)
+		wait for 20 ns; 		-- result = 0x02468ACE  and zeroOut = 0 at 259
+
+		datain_a <= X"01234567";	-- DataIn in hex
+		datain_b <= X"00000080";	-- in binary: 0000 0000 0000 0000 0000 0"000 10"00 0000
+		control  <= "01001";		-- Control in binary (SHIFT RIGHT by 2 test)
+		wait for 20 ns; 		-- result = 0x0048D159  and zeroOut = 0 at 279
 
 
 		wait; -- will wait forever
 	END PROCESS;
-
 END;
